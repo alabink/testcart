@@ -1,0 +1,97 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.cart-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Cart Item Styles */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item div {
+    flex: 1;
+}
+
+.cart-item div:nth-child(2) {
+    text-align: right;
+}
+
+/* Total Price Styles */
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Button Styles */
+button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff1a1a;
+}
+
+/* Link Styles */
+.link-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns content to the right */
+    margin-top: 10px; /* Optional: margin for spacing */
+}
+
+.link-container a {
+    display: inline-block; /* Make the link behave like a block element */
+    background-color: #007BFF; /* Background color */
+    color: white; /* Text color */
+    padding: 5px 10px; /* Padding for size, reduced for tighter fit */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.link-container a:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-item div {
+        width: 100%;
+    }
+}

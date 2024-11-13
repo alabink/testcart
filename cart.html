@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cart.css">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .cart-container {
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            margin: 0 5px;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+        <div id="cartItems"></div>
+        <div class="total" id="totalPrice"></div>
+        <button onclick="clearCart()">Clear Cart</button>
+        <button id="checkoutButton" onclick="checkout()">Checkout</button>
+        <div class="link-container">
+            <a href="index.html">Continue Shopping</a>
+        </div>
+
+    </div>
+    <script>
+        function displayCart() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const cartContainer = document.getElementById('cartItems');
+            const totalPriceElement = document.getElementById('totalPrice');
+            let totalPrice = 0;
+
+            cartContainer.innerHTML = ''; // Clear previous items
+
+            cartItems.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('cart-item');
+                itemDiv.innerHTML = `
+                    <img src="image/${item.image}" alt="${item.name}">
+                    <div>${item.name} - $${item.price.toLocaleString()}</div>
+                    <div class="quantity-controls">
+                        <button onclick="updateQuantity(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                    <div>$${(item.price * item.quantity).toLocaleString()}</div>`;
+                cartContainer.appendChild(itemDiv);
+                totalPrice += item.price * item.quantity;
+            });
+
+            totalPriceElement.innerText = `Total: $${totalPrice.toLocaleString()}`;
+        }
+
+        function updateQuantity(index, change) {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            if (cartItems[index]) {
+                cartItems[index].quantity += change;
+                if (cartItems[index].quantity <= 0) {
+                    cartItems.splice(index, 1); // Remove item if quantity is zero
+                }
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                displayCart(); // Refresh cart display
+            }
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cartItems');
+            displayCart(); // Update the cart display
+        }
+
+        function checkout() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            if (cartItems.length === 0) {
+                alert('Your cart is empty. Please add items to your cart before checking out.');
+                return; // Exit the function if the cart is empty
+            }
+            alert('Payment successful');
+            clearCart(); // Clear cart after payment
+        }
+
+        displayCart();
+    </script>
+</body>
+
+</html>
